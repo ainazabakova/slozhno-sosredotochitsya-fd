@@ -1,9 +1,5 @@
 /* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
 
-body {
-  margin: 0;
-  padding: 0;
-}
 
 .page {
   font-family: "IBM Plex mono", sans-serif;
@@ -135,7 +131,7 @@ body {
 }
 
 .header__theme-menu-button:hover {
-  outline: 1px solid rgba(var(--outline-color-rgb), 0.4);
+  outline: 1px solid rgba(var(--accent-color-rgb), 0.4);
 }
 
 .hero {
@@ -214,7 +210,7 @@ body {
 }
 
 .text-link:focus-visible {
-  outline: 1px solid rgba(var(--outline-color-rgb), 0.4);
+  outline: 1px solid var(--topic-text-color);
 }
 
 .advice-pictures {
