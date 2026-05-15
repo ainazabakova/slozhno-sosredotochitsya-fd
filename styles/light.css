@@ -14,6 +14,7 @@
   --bg-color: #fbeff6;
   --desc-color: #353430;
   --deco-color: #353430;
+  --outline-color-rgb: 50, 49, 45;
   .deco {
     display: none;
   }

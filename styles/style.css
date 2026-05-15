@@ -1,5 +1,10 @@
 /* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .page {
   font-family: "IBM Plex mono", sans-serif;
   background-image: var(--bg-image);
@@ -78,11 +83,12 @@
   grid-area: header;
   position: relative;
   display: grid;
-  min-height: calc(668px);
-  height: calc(100vh);
+  min-height: calc(668px - 20px);
+  height: 95vh;
   align-content: start;
   grid-template-rows: 1fr auto auto 1fr;
   grid-template-columns: 2fr 1fr;
+  padding: 0;
 }
 
 .header__theme-menu {
@@ -124,11 +130,12 @@
 }
 
 .header__theme-menu-button:focus-visible {
-  text-decoration: underline;
+  border-bottom: var(--deco-color) 1px solid;
   outline: none;
 }
+
 .header__theme-menu-button:hover {
-  outline: 1px solid rgba(var(--accent-color-rgb), 0.4);
+  outline: 1px solid rgba(var(--outline-color-rgb), 0.4);
 }
 
 .hero {
@@ -141,6 +148,7 @@
 }
 
 .hero-title {
+  /*no focus и focus*/
   font-weight: 700;
   font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
   line-height: 83%;
@@ -161,7 +169,6 @@
   grid-column: 1 / -1;
   grid-row: 4 / 5;
   align-self: center;
-  height: clamp(71px, 117px, 117px);
 }
 
 .block-title {
@@ -175,7 +182,7 @@
 
 .topic-title {
   background-color: var(--accent-color);
-  color: #000028;
+  color: var(--desc-color);
   font-weight: 700;
   font-size: 18px;
   line-height: 23.4px;
@@ -201,9 +208,13 @@
   text-shadow: var(--shadow-color) 3px 2px;
 }
 
-.text-link:focus-visible {
+.text-link:hover {
   outline: none;
-  text-decoration: underline;
+  border-bottom: var(--topic-text-color) solid 1px;
+}
+
+.text-link:focus-visible {
+  outline: 1px solid rgba(var(--outline-color-rgb), 0.4);
 }
 
 .advice-pictures {
@@ -212,12 +223,15 @@
   gap: 10px;
 }
 
-.advice-picture-item {
-  width: 100%;
-}
-
 .advice-title {
   font-weight: 400;
+}
+
+.advice-picture-item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .footer {
@@ -226,8 +240,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(668px);
-  height: calc(100vh);
+  min-height: calc(668px - 20px);
+  height: 95vh;
 }
 
 .footer-title {
@@ -236,7 +250,7 @@
   text-align: center;
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (width>=768px) {
   .page {
     margin: 20px;
   }
@@ -246,7 +260,12 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: auto auto auto;
-    gap: 20px;
+  }
+
+  .deco {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   /* ---------HEADER и HERO------------*/
@@ -255,12 +274,11 @@
     grid-column: 1 / -1;
     grid-row: 1;
     display: grid;
-    min-height: calc(1024px);
-    height: calc(100vh);
+    min-height: calc(1024px - 40px);
+    height: 95vh;
     grid-template-columns: subgrid;
     grid-template-rows: 1fr auto 1fr;
     align-content: start;
-    padding-bottom: 20px;
   }
 
   .header__theme-menu {
@@ -278,6 +296,11 @@
     height: auto;
   }
 
+  header .hero-title {
+    /*сдвигает только no focus*/
+    margin-left: -20px;
+  }
+
   .hero-title {
     font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
     grid-column: 1 / -1;
@@ -286,35 +309,37 @@
     align-self: center;
   }
 
-  header .hero-title:first-child {
-    margin-left: -20px;
-  }
-
   .hero-description {
     grid-column: 4 / 7;
     grid-row: 3;
     align-self: end;
     margin: auto;
-    margin-left: -10px;
     height: auto;
   }
   /*-------------------------------*/
 
-  /* MAIN С ТЕКСТОМ */
+  /* -----------MAIN С ТЕКСТОМ --------------*/
   .main {
     grid-area: unset;
     grid-column: 1 / -1;
     grid-row: 2;
+    padding-bottom: 70px;
   }
 
-  .hard-to-focus,
-  .how-to-concentrate {
+  .content-section {
+    /*тематитеский блок с темой block-title и подтемой topic-title*/
     display: grid;
-    grid-template-columns:
-      calc(2 * ((100% - 5 * 20px) / 6) + 20px)
-      1fr;
+    grid-template-columns: 1fr 2fr;
     column-gap: 20px;
     align-items: start;
+    margin-top: 80px;
+  }
+
+  .content-section {
+    margin-top: 80px;
+  }
+
+  .content-section:nth-child(3) {
     margin-top: 60px;
   }
 
@@ -327,10 +352,9 @@
 
   .topic-title {
     grid-column: 2;
-    margin-left: 10px;
   }
 
-  .topic-title:first-of-type {
+  .topic-title:first-child {
     margin-top: 0;
   }
 
@@ -340,58 +364,48 @@
 
   .topic-text {
     grid-column: 2;
-    margin: 0 0 0 10px;
+    margin: 0 0 20px 0px;
     padding: 0;
   }
   /*-------------------------------------------------*/
 
   /*--------Что снижает концентрацию внимания?------- */
-  .reduced-concentration {
+  .special-content-section {
+    /*тематический блок с особым оформлением*/
     display: grid;
-    grid-template-columns:
-      calc(2 * ((100% - 5 * 20px) / 6) + 20px) /*две колонки от родителя*/
-      1fr;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 20px;
+    row-gap: 20px;
     align-items: start;
-    margin-top: 80px;
+    margin-top: 60px;
   }
 
-  .reduced-concentration .block-title {
+  .special-content-section .block-title {
     grid-column: 1 / 2;
     grid-row: 1;
-    align-self: start;
-    margin: 0 0 20px 0;
   }
 
-  .reduced-concentration .topic-title {
-    grid-column: 1 / -1;
-    margin: 0 0 10px 0;
+  .special-content-section-inner {
+    /*содержимое .special-content-section кроме block-title*/
+    display: grid;
+    grid-column: 1/ -1;
+    grid-row: span 2;
+    grid-template-columns: 1;
+    grid-template-rows: auto;
   }
-
-  .reduced-concentration .topic-text {
-    grid-column: 1 / -1;
-    padding: 0;
-    margin: 0;
-  }
-  /*----------------------------------------------------*/
 
   .advice-title {
     font-weight: 400;
     margin-bottom: 10px;
   }
 
-  .how-to-concentrate {
-    margin-top: 80px;
-  }
-
-  .how-to-concentrate .topic-title:first-child {
-    margin-bottom: 20px;
-  }
+  /*----------------------------------------------------*/
 
   /*--------СЕКЦИЯ С КАРТИНКАМИ---------*/
   .picture-section {
     grid-column: 2;
-    margin-top: 80px;
+    margin-top: 60px;
   }
 
   .picture-section .topic-title {
@@ -432,57 +446,29 @@
     grid-column: 2/4;
     grid-row: 3;
   }
-
-  .advice-picture-item {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
   /*----------------------------------------------------*/
 
   .footer {
     grid-area: unset;
     grid-column: 1 / -1;
     grid-row: 3;
-    min-height: calc(1024px);
-    height: calc(100vh);
+    min-height: calc(768px - 40px);
+    height: 95vh;
     margin-top: 10px;
   }
 }
 
 @media (width >= 1024px) {
-  .app {
-    grid-area: unset;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: auto auto auto;
-    gap: 20px;
-  }
-
-  .page {
-    margin: 20px;
-  }
-
   /* ---------HEADER и HERO------------*/
 
   .header {
-    grid-area: unset;
-    grid-column: 1 / -1;
-    grid-row: 1;
-    display: grid;
-    min-height: calc(768px);
-    height: calc(100vh);
-    grid-template-columns: subgrid;
-    grid-template-rows: 1fr auto 1fr;
-    align-content: start;
-    position: relative;
+    min-height: calc(768px - 40px);
+    height: 95vh;
   }
 
   .header__theme-menu {
     grid-column: 1 / -1;
     grid-row: 1;
-    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
@@ -496,209 +482,58 @@
     gap: 10px;
     margin: 0;
     padding: 0;
-    height: auto;
-  }
-
-  .deco {
-    position: absolute;
-    top: 0;
-    right: 0;
   }
 
   .hero-title {
-    grid-column: 1 / -1;
-    grid-row: 2 / 3;
-    margin: 0;
-    align-self: center;
     font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
-  }
-
-  header .hero-title:first-child {
-    margin-left: -20px;
-  }
-
-  .hero-description {
-    grid-column: 4 / 7;
-    grid-row: 3;
-    align-self: end;
-    margin: auto;
-    margin-left: -10px;
-    height: auto;
   }
   /*-------------------------------*/
 
-  /* MAIN С ТЕКСТОМ */
-  .main {
-    grid-area: unset;
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .hard-to-focus,
-  .how-to-concentrate {
-    display: grid;
-    grid-template-columns:
-      calc(2 * ((100% - 5 * 20px) / 6) + 20px)
-      1fr;
-    column-gap: 20px;
-    align-items: start;
-    margin-top: 60px;
-  }
-
-  .block-title {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    align-self: start;
-    margin: 0;
-  }
-
+  /*------------ MAIN С ТЕКСТОМ ---------------------*/
   .topic-title {
-    grid-column: 2;
-  }
-
-  .topic-title:first-of-type {
-    margin-top: 0;
-  }
-
-  .topic-title + .topic-text + .topic-title {
-    margin-top: 20px;
+    margin-bottom: 10px;
   }
 
   .topic-text {
-    grid-column: 2;
-    margin: 0;
-    padding: 0;
+    margin-bottom: 20px;
   }
-  /*-------------------------------------------------*/
 
-  /*--------Что снижает концентрацию внимания?------- */
-  .reduced-concentration {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 20px;
-    align-items: start;
+  .content-section .topic-text {
+    margin-left: -10px;
+  }
+
+  .content-section .topic-title {
+    margin-left: -10px;
+  }
+
+  .content-section {
     margin-top: 80px;
   }
-
-  .reduced-concentration .block-title {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: start;
-    margin: 0 0 20px 0;
-  }
-
-  .reduced-concentration .topic-title:nth-of-type(1) {
-    grid-column: 1;
-    grid-row: 2;
-    margin: 0 0 10px 0;
-  }
-
-  .reduced-concentration .topic-title:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 2;
-    margin: 0 0 10px 0;
-  }
-
-  .reduced-concentration .topic-title:nth-of-type(3) {
-    grid-column: 3;
-    grid-row: 2;
-    margin: 0 0 10px 0;
-  }
-
-  .reduced-concentration .topic-text:nth-of-type(1) {
-    grid-column: 1;
-    grid-row: 3;
-    margin: 0;
-    padding: 0;
-  }
-
-  .reduced-concentration .topic-text:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 3;
-    margin: 0;
-    padding: 0;
-  }
-
-  .reduced-concentration .topic-text:nth-of-type(3) {
-    grid-column: 3;
-    grid-row: 3;
-    margin: 0;
-    padding: 0;
-  }
-  /*----------------------------------------------------*/
 
   .advice-title {
     font-weight: 400;
     margin-bottom: 10px;
   }
 
-  .how-to-concentrate {
-    margin-top: 80px;
-  }
+  /*-------------------------------------------------*/
 
-  .how-to-concentrate .topic-title:first-child {
-    margin-bottom: 20px;
-  }
-
-  /*--------СЕКЦИЯ С КАРТИНКАМИ---------*/
-  .picture-section {
-    grid-column: 2;
-    margin-top: 80px;
-  }
-
-  .picture-section .topic-title {
-    grid-column: auto;
-    grid-row: auto;
-    margin: 0 0 20px 0;
-    width: 100%;
-  }
-
-  .advice-pictures {
-    display: grid;
+  /*--------Что снижает концентрацию внимания?------- */
+  .special-content-section {
+    grid-template-rows: repeat(2, auto);
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, auto);
-    gap: 20px;
   }
 
-  .advice-pictures img:nth-child(1) {
-    grid-column: 1 / 3;
-    grid-row: 1;
-  }
-
-  .advice-pictures img:nth-child(2) {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
-  }
-
-  .advice-pictures img:nth-child(3) {
-    grid-column: 1 / 2;
-    grid-row: 2/4;
-  }
-
-  .advice-pictures img:nth-child(4) {
-    grid-column: 2 / 3;
-    grid-row: 2;
-  }
-
-  .advice-pictures img:nth-child(5) {
-    grid-column: 2/4;
-    grid-row: 3;
-  }
-
-  .advice-picture-item {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .special-content-section-inner {
+    grid-template-columns: subgrid;
   }
   /*----------------------------------------------------*/
 
+  /*--------СЕКЦИЯ С КАРТИНКАМИ---------*/
+  /*идентична с @media (width>=768px)*/
+  /*----------------------------------------------------*/
+
   .footer {
-    grid-area: unset;
-    grid-column: 1 / -1;
-    grid-row: 3;
     min-height: calc(768px - 40px);
-    height: calc(100vh - 40px);
-    margin-top: 10px;
+    height: 95vh;
   }
 }
